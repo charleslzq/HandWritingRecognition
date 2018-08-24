@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion versions.sdk.target
+    defaultConfig {
+        applicationId "com.github.charleslzq.hwr"
+        minSdkVersion versions.sdk.min
+        targetSdkVersion versions.sdk.target
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library-view')
+    implementation project(':hanvon-engine')
+    implementation project(':lookup-engine')
+    implementation project(':hicloud-engine')
+    implementation deps.kotlin.lib
+    implementation deps.support.compat
+    implementation deps.support.appCompat
+    implementation deps.support.constraintLayout
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.support.runner
+    androidTestImplementation deps.test.support.espresso.core
+}
