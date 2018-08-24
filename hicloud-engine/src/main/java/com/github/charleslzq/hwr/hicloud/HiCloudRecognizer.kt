@@ -27,6 +27,7 @@ class HiCloudRecognizer(
         context: Context,
         developerKey: String,
         appKey: String,
+        private val useHistorical: Boolean = true,
         additionalParams: MutableMap<String, String> = mutableMapOf()
 ) : HandWritingRecognizer {
     val configuration = Configuration(context, developerKey, appKey, additionalParams)
@@ -180,7 +181,7 @@ class HiCloudRecognizer(
         it.points.toMutableList().apply {
             add(HandWritingView.StrokePoint(PointF(-1f, 0f), false))
             add(HandWritingView.StrokePoint(PointF(-1f, -1f), false))
-        }
+        }.filter { useHistorical || !it.isHistorical }
     }.flatMap { listOf(it.point.x.toShort(), it.point.y.toShort()) }.toShortArray()
 
     class Configuration

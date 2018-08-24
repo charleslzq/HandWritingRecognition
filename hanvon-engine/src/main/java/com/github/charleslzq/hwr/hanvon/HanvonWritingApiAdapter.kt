@@ -11,7 +11,8 @@ import retrofit2.Call
 import java.nio.charset.Charset
 
 class HanvonWritingApiAdapter(
-        private val hanvonHandWritingApi: HanvonHandWritingApi
+        private val hanvonHandWritingApi: HanvonHandWritingApi,
+        private val useHistorical: Boolean = false
 ) {
     private val gson = Gson()
 
@@ -97,7 +98,7 @@ class HanvonWritingApiAdapter(
                 it
             }
         }.filter {
-            !it.isHistorical
+            useHistorical || !it.isHistorical
         }
     }.let {
         it.toMutableList().apply {

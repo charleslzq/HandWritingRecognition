@@ -21,7 +21,11 @@ data class MatchResultEntry(
         val score: Double
 )
 
-class HanziLookupRecognizer(configString: String, val looseness: Double = DEFAULT_LOOSENESS) : HandWritingRecognizer {
+class HanziLookupRecognizer(
+        configString: String,
+        private val looseness: Double = DEFAULT_LOOSENESS,
+        private val useHistorical: Boolean = true
+) : HandWritingRecognizer {
     private val gson = GsonBuilder()
             .registerTypeAdapter(CharEntry::class.java, CharEntryDeserializer())
             .registerTypeAdapter(SubStrokesEntry::class.java, SubStrokesEntryDeserializer())
@@ -30,7 +34,7 @@ class HanziLookupRecognizer(configString: String, val looseness: Double = DEFAUL
     var limit = 80
 
     override fun recognize(strokes: List<HandWritingView.Stroke>, candidateBuilder: CandidateBuilder): List<Candidate> {
-        val hanziStrokes = strokes.map { HanziStroke(it) }
+        val hanziStrokes = strokes.map { HanziStroke(it, useHistorical) }
         val boundary = hanziStrokes.flatMap { it.points }.let { pointList ->
             RectF(
                     pointList.map { it.x }.min()!!,
