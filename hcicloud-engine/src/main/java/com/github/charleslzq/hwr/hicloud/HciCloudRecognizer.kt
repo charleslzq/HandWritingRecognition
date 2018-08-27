@@ -1,6 +1,7 @@
 package com.github.charleslzq.hwr.hicloud
 
 import android.content.Context
+import android.graphics.PointF
 import android.os.Environment
 import android.util.Log
 import com.github.charleslzq.hwr.view.Candidate
@@ -177,10 +178,12 @@ class HciCloudRecognizer(
         }
     }
 
-    private fun List<HandWritingView.Stroke>.toShort() = toMutableList().apply {
-        add(END_STROKE)
-    }.flatMap { stroke ->
-        stroke.points.filter { useHistorical || !it.isHistorical }
+    private fun List<HandWritingView.Stroke>.toShort() = flatMap { stroke ->
+        stroke.points.toMutableList().apply {
+            add(END_POINT)
+        }.filter { useHistorical || !it.isHistorical }
+    }.toMutableList().apply {
+        add(END_ALL)
     }.flatMap { listOf(it.point.x.toShort(), it.point.y.toShort()) }.toShortArray()
 
     class Configuration
@@ -206,8 +209,10 @@ class HciCloudRecognizer(
 
     companion object {
         const val TAG = "HciCloudRecognizer"
+        private val END_POINT = HandWritingView.StrokePoint(PointF(-1f, 0f), false)
+        private val END_ALL = HandWritingView.StrokePoint(PointF(-1f, -1f), false)
         private val END_STROKE = HandWritingView.Stroke().apply {
-            addPoint(-1f, 0f)
+            //            addPoint(-1f, 0f)
             addPoint(-1f, -1f, false, true)
         }
     }
