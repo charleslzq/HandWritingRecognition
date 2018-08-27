@@ -9,14 +9,17 @@ object HWREngine {
     val engines: Set<String>
         get() = builderRegistry.keys
 
-    fun register(name: String, build: () -> HandWritingRecognizer) {
+    @JvmOverloads
+    fun register(name: String, autoInit: Boolean = true, build: () -> HandWritingRecognizer) {
         builderRegistry[name] = build
+        if (autoInit) {
+            initRecognizer(name)
+        }
     }
 
-    fun register(name: String, builder: RecognizerBuilder) {
-        builderRegistry[name] = {
-            builder.build()
-        }
+    @JvmOverloads
+    fun register(name: String, autoInit: Boolean = true, builder: RecognizerBuilder) = register(name, autoInit) {
+        builder.build()
     }
 
     fun initRecognizer(name: String) {
