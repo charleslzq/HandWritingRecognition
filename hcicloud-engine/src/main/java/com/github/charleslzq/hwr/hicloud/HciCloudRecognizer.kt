@@ -26,10 +26,11 @@ class HciCloudRecognizer(
         context: Context,
         developerKey: String,
         appKey: String,
-        private val useHistorical: Boolean = true,
+        cloudUrl: String = "http://api.hcicloud.com:8888",
+        val useHistorical: Boolean = true,
         additionalParams: MutableMap<String, String> = mutableMapOf()
 ) : HandWritingRecognizer {
-    val configuration = Configuration(context, developerKey, appKey, additionalParams)
+    val configuration = Configuration(context, developerKey, appKey, cloudUrl, additionalParams)
 
     override fun init() {
         try {
@@ -48,7 +49,7 @@ class HciCloudRecognizer(
                     recursiveAssociate(it, candidateBuilder)
                 }
             } catch (e: Throwable) {
-                Log.e(TAG, "Error run hicloud engine", e)
+                Log.e(TAG, "Error run hcicloud engine", e)
                 emptyList()
             }
 
@@ -187,10 +188,10 @@ class HciCloudRecognizer(
             internal val context: Context,
             val developerKey: String,
             val appKey: String,
+            val cloudUrl: String = "http://api.hcicloud.com:8888",
             val additionalParams: MutableMap<String, String> = mutableMapOf()
     ) {
         val authFilePath = context.filesDir.absolutePath
-        var cloudUrl = "http://api.hcicloud.com:8888"
         val dataPath = (Environment.getExternalStorageDirectory().absolutePath + File.separator
                 + "sinovoice" + File.separator
                 + context.packageName + File.separator
