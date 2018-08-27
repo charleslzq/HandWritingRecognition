@@ -5,13 +5,13 @@ import com.github.charleslzq.hwr.hanvon.HanvonApiHolder
 import com.github.charleslzq.hwr.hanvon.HanvonWritingApiAdapter
 import com.github.charleslzq.hwr.hanvon.MultiHanvonRecognizer
 import com.github.charleslzq.hwr.hanvon.SingleHanvonRecognizer
-import com.github.charleslzq.hwr.hicloud.HiCloudRecognizer
+import com.github.charleslzq.hwr.hicloud.HciCloudRecognizer
 import com.github.charleslzq.hwr.lookup.HanziLookupRecognizer
 import com.github.charleslzq.hwr.view.HWREngine
 
 class HwrApplication : Application() {
 
-    private var hiCloudRecognizer: HiCloudRecognizer? = null
+    private var hciCloudRecognizer: HciCloudRecognizer? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -38,18 +38,18 @@ class HwrApplication : Application() {
             }
         }
         HWREngine.register("hicloud") {
-            HiCloudRecognizer(
+            HciCloudRecognizer(
                     this,
                     "43c5a7be629fc2e7f0c2d792a04c367d",
                     "545d5463"
             ).also {
-                hiCloudRecognizer = it
+                hciCloudRecognizer = it
             }
         }
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        hiCloudRecognizer?.release()
+        hciCloudRecognizer?.release()
     }
 }

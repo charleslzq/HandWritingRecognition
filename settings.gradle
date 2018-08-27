@@ -1,1 +1,1 @@
-include ':app', ':library-view', ':hanvon-engine', ':lookup-engine', ':hicloud-engine'
+include ':app', ':library-view', ':hanvon-engine', ':lookup-engine', ':hcicloud-engine'

@@ -36,6 +36,10 @@ constructor(
     })
     private var onSelect: (String) -> Unit = {}
     var engine: String = ""
+        set(value) {
+            HWREngine.initRecognizer(value)
+            field = value
+        }
     val paint = Paint().apply {
         color = Color.BLACK
         strokeWidth = 3f

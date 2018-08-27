@@ -27,7 +27,7 @@ dependencies {
     implementation project(':library-view')
     implementation project(':hanvon-engine')
     implementation project(':lookup-engine')
-    implementation project(':hicloud-engine')
+    implementation project(':hcicloud-engine')
     implementation deps.kotlin.lib
     implementation deps.support.compat
     implementation deps.support.appCompat
