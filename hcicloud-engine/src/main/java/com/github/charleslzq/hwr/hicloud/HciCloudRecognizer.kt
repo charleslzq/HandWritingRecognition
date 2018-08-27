@@ -180,7 +180,7 @@ class HciCloudRecognizer(
 
     private fun List<HandWritingView.Stroke>.toShort() = flatMap { stroke ->
         stroke.points.toMutableList().apply {
-            add(END_POINT)
+            add(END_STROKE)
         }.filter { useHistorical || !it.isHistorical }
     }.toMutableList().apply {
         add(END_ALL)
@@ -209,11 +209,7 @@ class HciCloudRecognizer(
 
     companion object {
         const val TAG = "HciCloudRecognizer"
-        private val END_POINT = HandWritingView.StrokePoint(PointF(-1f, 0f), false)
+        private val END_STROKE = HandWritingView.StrokePoint(PointF(-1f, 0f), false)
         private val END_ALL = HandWritingView.StrokePoint(PointF(-1f, -1f), false)
-        private val END_STROKE = HandWritingView.Stroke().apply {
-            //            addPoint(-1f, 0f)
-            addPoint(-1f, -1f, false, true)
-        }
     }
 }
