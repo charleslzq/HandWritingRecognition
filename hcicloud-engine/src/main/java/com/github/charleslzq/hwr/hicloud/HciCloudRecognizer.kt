@@ -73,7 +73,7 @@ class HciCloudRecognizer(
                     recursiveAssociate(it, candidateBuilder)
                 }
             } catch (e: Throwable) {
-                Log.e(TAG, "Error run hicloud engine", e)
+                Log.e(TAG, "Error run hcicloud engine", e)
                 emptyList()
             }
 

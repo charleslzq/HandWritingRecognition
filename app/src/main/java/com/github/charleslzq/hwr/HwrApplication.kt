@@ -37,7 +37,7 @@ class HwrApplication : Application() {
                 HanziLookupRecognizer(it.joinToString(""))
             }
         }
-        HWREngine.register("hicloud") {
+        HWREngine.register("hcicloud") {
             HciCloudRecognizer(
                     this,
                     "43c5a7be629fc2e7f0c2d792a04c367d",
