@@ -35,7 +35,7 @@ constructor(
 ) : HandWritingRecognizer {
     val configuration = Configuration(context, developerKey, appKey, cloudUrl, additionalParams)
 
-    override fun init() {
+    fun init() {
         try {
             hciSysInit(configuration.context)
             checkAuthAndUpdateAuth()

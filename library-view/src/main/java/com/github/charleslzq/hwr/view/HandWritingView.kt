@@ -37,8 +37,10 @@ constructor(
     private var onSelect: (String) -> Unit = {}
     var engine: String = ""
         set(value) {
-            HWREngine.initRecognizer(value)
-            field = value
+            if (HWREngine.engines.contains(value)) {
+                field = value
+                HWREngine.prepare(field)
+            }
         }
     val paint = Paint().apply {
         color = Color.BLACK
@@ -52,6 +54,7 @@ constructor(
         attributeSet?.let {
             context.obtainStyledAttributes(it, R.styleable.HandWritingView, defStyle, 0).apply {
                 engine = getString(R.styleable.HandWritingView_engine)
+                HWREngine.prepare(engine)
                 recycle()
             }
         }

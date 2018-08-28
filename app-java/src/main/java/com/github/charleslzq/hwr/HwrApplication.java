@@ -67,9 +67,11 @@ public class HwrApplication extends Application {
                         "43c5a7be629fc2e7f0c2d792a04c367d",
                         "545d5463"
                 );
+                hciCloudRecognizer.init();
                 return hciCloudRecognizer;
             }
         });
+        HWREngine.prepare("hcicloud");
     }
 
     @Override

@@ -10,36 +10,29 @@ object HWREngine {
     val engines: Set<String>
         get() = builderRegistry.keys
 
-    @JvmOverloads
     @JvmStatic
-    fun register(name: String, autoInit: Boolean = true, build: () -> HandWritingRecognizer) {
-        builderRegistry[name] = build
-        if (autoInit) {
-            initRecognizer(name)
-        }
-    }
-
-    @JvmOverloads
-    @JvmStatic
-    fun register(name: String, autoInit: Boolean = true, builder: RecognizerBuilder) = register(name, autoInit) {
-        builder.build()
-    }
-
-    @JvmStatic
-    fun initRecognizer(name: String) {
-        if (!recognizerRegistry.containsKey(name) && engines.contains(name)) {
+    fun prepare(name: String) {
+        if (builderRegistry.containsKey(name) && !recognizerRegistry.containsKey(name)) {
             builderRegistry[name]!!().let {
-                it.init()
                 recognizerRegistry[name] = it
             }
         }
     }
 
     @JvmStatic
+    fun register(name: String, build: () -> HandWritingRecognizer) {
+        builderRegistry[name] = build
+    }
+
+    @JvmStatic
+    fun register(name: String, builder: RecognizerBuilder) = register(name) {
+        builder.build()
+    }
+
+    @JvmStatic
     fun runRecognizer(name: String, candidateBuilder: CandidateBuilder, strokes: List<HandWritingView.Stroke>): List<Candidate> = when {
         recognizerRegistry.containsKey(name) -> recognizerRegistry[name]!!.recognize(strokes, candidateBuilder)
         builderRegistry.containsKey(name) -> builderRegistry[name]!!().let {
-            it.init()
             recognizerRegistry[name] = it
             it.recognize(strokes, candidateBuilder)
         }
@@ -51,7 +44,6 @@ object HWREngine {
 }
 
 interface HandWritingRecognizer {
-    fun init() {}
     fun recognize(strokes: List<HandWritingView.Stroke>, candidateBuilder: CandidateBuilder): List<Candidate>
 }
 
