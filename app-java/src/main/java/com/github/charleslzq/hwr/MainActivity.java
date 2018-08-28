@@ -2,7 +2,9 @@ package com.github.charleslzq.hwr;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     Button selectButton;
 
     private List<String> engines = new ArrayList<>(HWREngine.getEngines());
-    private PopupMenu engineSelector = new PopupMenu(selectButton.getContext(), selectButton);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        final PopupMenu engineSelector = new PopupMenu(selectButton.getContext(), selectButton);
+        for (int index = 0; index < engines.size(); index++) {
+            engineSelector.getMenu().add(Menu.NONE, index, Menu.NONE, engines.get(index));
+        }
         engineSelector.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -70,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 handWritingView.setEngine(newEngine);
                 selectButton.setText("Engine: " + newEngine);
                 return true;
+            }
+        });
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                engineSelector.show();
             }
         });
         if (engines.contains(handWritingView.getEngine())) {
@@ -100,11 +111,6 @@ public class MainActivity extends AppCompatActivity {
     public void reset() {
         textView.setText("");
         clear();
-    }
-
-    @OnClick(R.id.selectButton)
-    public void select() {
-        engineSelector.show();
     }
 
     private void updateButtonState() {
