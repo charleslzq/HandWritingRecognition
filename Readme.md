@@ -66,9 +66,6 @@ java代码如下：
 
     hciCloudRecognizer.release();
 
-HciHwrEngine还有两个方法，recognize和associate， 分别用于识别笔迹和获取联想词，如果使用
-默认提供的组件的话就不需要直接调用这两个方法
-
 #### 笔迹识别
 在合适的位置使用com.github.charleslzq.hwr.view.HandWritingView即可。它本身是一个ImageView，会将
 用户在它上面的触摸轨迹保留下来，并在每次用户手指离开时（写完一画时）将轨迹数据交给识别引擎处理，可以通过
