@@ -10,7 +10,9 @@ import com.google.gson.Gson
 import retrofit2.Call
 import java.nio.charset.Charset
 
-class HanvonWritingApiAdapter(
+class HanvonWritingApiAdapter
+@JvmOverloads
+constructor(
         private val hanvonHandWritingApi: HanvonHandWritingApi,
         private val useHistorical: Boolean = false
 ) {

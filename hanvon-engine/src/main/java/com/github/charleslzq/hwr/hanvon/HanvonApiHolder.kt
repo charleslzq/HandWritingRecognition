@@ -7,7 +7,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 fun String.toSafeRetrofitUrl() = takeIf { endsWith("/") } ?: this+"/"
 
-class HanvonApiHolder(
+class HanvonApiHolder
+@JvmOverloads
+constructor(
         baseUrl: String,
         private val retrofitBuilder: (String) -> Retrofit = {
             Retrofit.Builder()

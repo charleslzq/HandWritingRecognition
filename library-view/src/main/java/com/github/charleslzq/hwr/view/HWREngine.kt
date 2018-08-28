@@ -6,10 +6,12 @@ object HWREngine {
     const val TAG = "HWREngine"
     private val builderRegistry = mutableMapOf<String, () -> HandWritingRecognizer>()
     private val recognizerRegistry = mutableMapOf<String, HandWritingRecognizer>()
+    @JvmStatic
     val engines: Set<String>
         get() = builderRegistry.keys
 
     @JvmOverloads
+    @JvmStatic
     fun register(name: String, autoInit: Boolean = true, build: () -> HandWritingRecognizer) {
         builderRegistry[name] = build
         if (autoInit) {
@@ -18,10 +20,12 @@ object HWREngine {
     }
 
     @JvmOverloads
+    @JvmStatic
     fun register(name: String, autoInit: Boolean = true, builder: RecognizerBuilder) = register(name, autoInit) {
         builder.build()
     }
 
+    @JvmStatic
     fun initRecognizer(name: String) {
         if (!recognizerRegistry.containsKey(name) && engines.contains(name)) {
             builderRegistry[name]!!().let {
@@ -31,6 +35,7 @@ object HWREngine {
         }
     }
 
+    @JvmStatic
     fun runRecognizer(name: String, candidateBuilder: CandidateBuilder, strokes: List<HandWritingView.Stroke>): List<Candidate> = when {
         recognizerRegistry.containsKey(name) -> recognizerRegistry[name]!!.recognize(strokes, candidateBuilder)
         builderRegistry.containsKey(name) -> builderRegistry[name]!!().let {

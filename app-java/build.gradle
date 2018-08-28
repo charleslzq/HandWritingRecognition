@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion versions.sdk.target
+    defaultConfig {
+        applicationId "com.github.charleslzq.hwr"
+        minSdkVersion versions.sdk.min
+        targetSdkVersion versions.sdk.target
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.kotlin.lib
+    implementation project(':library-view')
+    implementation project(':hanvon-engine')
+    implementation project(':lookup-engine')
+    implementation project(':hcicloud-engine')
+
+    implementation deps.support.appCompat
+
+    implementation deps.butterKnife.core
+    annotationProcessor deps.butterKnife.compiler
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.support.runner
+    androidTestImplementation deps.test.support.espresso.core
+}

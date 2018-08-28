@@ -23,7 +23,9 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HciCloudRecognizer(
+class HciCloudRecognizer
+@JvmOverloads
+constructor(
         context: Context,
         developerKey: String,
         appKey: String,

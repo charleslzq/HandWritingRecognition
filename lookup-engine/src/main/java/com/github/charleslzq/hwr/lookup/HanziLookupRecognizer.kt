@@ -21,7 +21,9 @@ data class MatchResultEntry(
         val score: Double
 )
 
-class HanziLookupRecognizer(
+class HanziLookupRecognizer
+@JvmOverloads
+constructor(
         configString: String,
         private val looseness: Double = DEFAULT_LOOSENESS,
         private val useHistorical: Boolean = true

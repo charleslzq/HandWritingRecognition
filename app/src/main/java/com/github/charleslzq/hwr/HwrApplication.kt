@@ -33,7 +33,7 @@ class HwrApplication : Application() {
             )
         }
         HWREngine.register("lookup") {
-            assets.open("mmah.json").bufferedReader().useLines {
+            assets.open("mmah.json").reader().useLines {
                 HanziLookupRecognizer(it.joinToString(""))
             }
         }
