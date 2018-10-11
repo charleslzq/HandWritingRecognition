@@ -20,6 +20,7 @@ import com.sinovoice.hcicloudsdk.common.hwr.HwrInitParam
 import com.sinovoice.hcicloudsdk.common.hwr.HwrRecogResult
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,20 +30,35 @@ constructor(
         context: Context,
         developerKey: String,
         appKey: String,
+        checkAuth: Boolean = true,
         cloudUrl: String = "http://api.hcicloud.com:8888",
         val useHistorical: Boolean = true,
         additionalParams: MutableMap<String, String> = mutableMapOf()
 ) : HandWritingRecognizer {
-    val configuration = Configuration(context, developerKey, appKey, cloudUrl, additionalParams)
+    val configuration = Configuration(context, developerKey, appKey, checkAuth, cloudUrl, additionalParams)
 
     fun init() {
         try {
             hciSysInit(configuration.context)
-            checkAuthAndUpdateAuth()
+            if (configuration.checkAuth) {
+                checkAuthAndUpdateAuth()
+            }
             hwrInit(configuration.context)
         } catch (e: Throwable) {
             Log.e(TAG, "hci init failed", e)
         }
+    }
+
+    fun saveAuthFile(authFile: File) {
+        authFile.copyTo(File(configuration.authFilePath + File.pathSeparator + authFile.name), true)
+    }
+
+    fun saveAuthFile(name: String, authInput: InputStream) {
+        val outputFile = File(configuration.authFilePath + File.pathSeparator + name)
+        if (outputFile.isDirectory || !outputFile.exists()) {
+            outputFile.createNewFile()
+        }
+        authInput.copyTo(FileOutputStream(outputFile))
     }
 
     override fun recognize(strokes: List<HandWritingView.Stroke>, candidateBuilder: CandidateBuilder): List<Candidate> =
@@ -193,6 +209,7 @@ constructor(
             internal val context: Context,
             val developerKey: String,
             val appKey: String,
+            val checkAuth: Boolean = true,
             val cloudUrl: String = "http://api.hcicloud.com:8888",
             val additionalParams: MutableMap<String, String> = mutableMapOf()
     ) {

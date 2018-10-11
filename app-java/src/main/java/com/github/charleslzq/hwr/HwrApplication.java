@@ -65,8 +65,15 @@ public class HwrApplication extends Application {
                 hciCloudRecognizer = new HciCloudRecognizer(
                         HwrApplication.this,
                         "43c5a7be629fc2e7f0c2d792a04c367d",
-                        "545d5463"
+                        "545d5463",
+                        false
                 );
+                String fileName = "HCI_BASIC_AUTH";
+                try {
+                    hciCloudRecognizer.saveAuthFile(fileName, getAssets().open(fileName));
+                } catch (Exception e) {
+                    Log.w(TAG, "Error when look for auth file", e);
+                }
                 hciCloudRecognizer.init();
                 return hciCloudRecognizer;
             }
