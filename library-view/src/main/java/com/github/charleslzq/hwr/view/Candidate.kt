@@ -33,4 +33,12 @@ class CandidateBuilder(
             }
         }
     }
+
+    fun buildAssociatable(strings: List<String>, associate: CandidateBuilder.AssociateMaker) = buildAssociatable(strings) {
+        associate.associate(it)
+    }
+
+    interface AssociateMaker {
+        fun associate(word: String): List<Candidate>
+    }
 }
