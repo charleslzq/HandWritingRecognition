@@ -16,7 +16,7 @@
 
     dependencies {
         // 其它依赖
-        implementation 'com.github.charleslzq:hw-view:1.0.0-RC3'
+        implementation 'com.github.charleslzq:hw-view:1.0.0-RC5'
     }
 
 因为本项目是用kotlin写的，在java中调用时需要加上kotlin的库
@@ -25,7 +25,7 @@
 
 如果要使用现成的识别引擎，就需要加入相应引擎的依赖。比如使用灵云的识别引擎就需要加入如下依赖：
 
-    com.github.charleslzq:hw-hcicloud-engine:1.0.0-RC3
+    com.github.charleslzq:hw-hcicloud-engine:1.0.0-RC5
 
 #### 初始化
 已定义的引擎需要向HWREngine注册才能使用， kotlin中注册灵云引擎的代码如下：
